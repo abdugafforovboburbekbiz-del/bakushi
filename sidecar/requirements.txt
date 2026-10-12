@@ -1,0 +1,14 @@
+# Bakushi sidecar dependencies (Python 3.11 recommended).
+# Install with:  pip install -r requirements.txt
+numpy>=1.24
+av>=12.0            # PyAV: bundles FFmpeg libs, decodes WAV/MP3/OGG/M4A
+librosa>=0.10       # BPM detection for beat-locked pad cutting
+# On Windows install ONE ORT runtime wheel. Bakushi uses the NATIVE
+# OpenVINO runtime (ov.Core) for both CPU and GPU separation, so the
+# correct pairing is onnxruntime-openvino + openvino (exact match,
+# official pairing: 1.24.1 <-> 2025.4.1). The ORT OpenVINO EP bridge is
+# broken for this model, but onnxruntime-openvino still provides the
+# ORT CPU EP fallback. Do NOT co-install onnxruntime-directml or plain
+# onnxruntime - the wheels overwrite each other's provider DLLs.
+onnxruntime-openvino==1.24.1
+openvino==2025.4.1
