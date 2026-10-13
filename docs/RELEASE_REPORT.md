@@ -1,7 +1,7 @@
 # Bakushi — Release Report (v1.0.0)
 
-Date: 2026-10-13 · Status: release-ready locally; GitHub publish pending manual
-steps (no `gh` CLI / credentials on this machine).
+Date: 2026-10-13 · Status: PUBLISHED — public GitHub repo + v1.0.0 release
+with installer and zip assets, verified against the vision (V1-V13).
 
 ## What the app is
 
@@ -89,22 +89,35 @@ contributors in `CONTRIBUTING.md`, architecture in `docs\ARCHITECTURE.md`.
   takes roughly 3-5 minutes. GPU (OpenVINO) helps where supported.
 - **Stems are AI estimates** and may contain bleed or artifacts.
 
-## GitHub status
+## GitHub — published (2026-10-13)
 
-`gh` CLI is not installed / authenticated on this machine, so nothing was
-pushed and no release was created. Everything is prepared for the user to
-run three steps with their own GitHub account:
-
-- **Step 1:** create an empty public repo named `bakushi` at github.com
-  (no README / license / .gitignore - the repo already has them).
-- **Step 2:** run the push script:
-  `powershell -ExecutionPolicy Bypass -File tools\push_to_github.ps1 -RepoUrl https://github.com/<your-user>/bakushi.git`
-  (adds the `origin` remote, pushes `main`, tags and pushes `v1.0.0`;
-  it re-checks that no personal paths or >100 MB files are tracked
-  before pushing).
-- **Step 3:** on github.com: Releases → Draft a new release → tag
-  `v1.0.0` → paste `dist\RELEASE_NOTES.md` → attach
-  `dist\BakushiSetup.exe` and `dist\bakushi-release.zip` → publish.
+- **Repo:** https://github.com/abdugafforovboburbekbiz-del/bakushi —
+  public, default branch `main`.
+- **Release:**
+  https://github.com/abdugafforovboburbekbiz-del/bakushi/releases/tag/v1.0.0 —
+  tag `v1.0.0`, title "Bakushi 1.0.0", notes from `dist\RELEASE_NOTES.md`.
+- **Assets (both `uploaded`, download URLs return HTTP 200):**
+  - `BakushiSetup.exe` — 184,840,205 bytes (~176 MB),
+    sha256 `03b225acdda8246551655dfe0854c4dda3c15a6b7213939c0d9b07d3b21c4826`
+  - `bakushi-release.zip` — 14,335,121 bytes (~13.7 MB),
+    sha256 `e8c03ba272df603fab3fb52cc81cca6f52ea708ad204aceeaf69957d0da16719`
+- **Consistency:** remote `main` HEAD =
+  local `284b530c844747ecef5d62f38cbe8ccd50003c0c` (8 commits); top-level
+  tree has exactly the 16 intended entries (README.md, CONTRIBUTING.md,
+  LICENSE, lib/, docs/, tools/, test/, …) — no `dist\`, no `test_songs\`,
+  no `*.onnx`.
+- **Vision verification (V1-V13):** upload (V1) wizard + library
+  autotest; AI separation (V2) 4 stems + sidecar selftest; one-tap
+  auto-fill (V3); pad edits + undo (V4); library store (V5); chop
+  editor (V6); starter kit (V7); braindead onboarding UX (V8); dark +
+  red theme (V9); musical downbeat-anchored auto-fill (V10); MPC step
+  sequencer, voice 211 loop (V11); silent installer round-trip (V12);
+  buildable from source (V13). Known gaps: unsigned exe (SmartScreen),
+  internet for pip on first install, clean-machine test not yet run.
+- **Security:** publishing used a classic PAT with `repo` scope (plus
+  broader admin scopes it did not need). **Revoke it after this
+  session:** GitHub → Settings → Developer settings → Personal access
+  tokens, and run `gh auth logout` locally.
 
 Pre-push sanitization (2026-10-13): every machine-specific user-directory
 path removed from tracked files (docs, `lib\state\app_state.dart`
