@@ -39,6 +39,20 @@ Name: "desktopicon"; Description: "Create a &desktop shortcut"; \
 [Files]
 Source: "..\build\windows\x64\runner\Release\bakushi.exe"; \
     DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\windows\x64\runner\Release\flutter_windows.dll"; \
+    DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\windows\x64\runner\Release\bakushi_engine.dll"; \
+    DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\windows\x64\runner\Release\dartjni.dll"; \
+    DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\windows\x64\runner\Release\desktop_drop_plugin.dll"; \
+    DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\windows\x64\runner\Release\file_selector_windows_plugin.dll"; \
+    DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\windows\x64\runner\Release\native_assets.json"; \
+    DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\windows\x64\runner\Release\data\*"; \
+    DestDir: "{app}\data"; Flags: ignoreversion recursesubdirs
 Source: "..\sidecar\bakushi_sidecar.py"; DestDir: "{app}\sidecar"; \
     Flags: ignoreversion
 Source: "..\sidecar\beat_analysis.py"; DestDir: "{app}\sidecar"; \

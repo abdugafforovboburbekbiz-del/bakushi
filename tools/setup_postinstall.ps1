@@ -10,14 +10,19 @@
 #    overwrite other keys) so the first app launch skips the picker.
 param([Parameter(Mandatory = $true)][string]$AppDir)
 
-$ErrorActionPreference = 'Stop'
+# NOT Stop: native commands (pip, python) write progress to stderr and
+# PowerShell 5.1 converts every such record into a NativeCommandError,
+# which would terminate the script even when the command SUCCEEDED.
+# Every native call below is gated on $LASTEXITCODE instead.
+$ErrorActionPreference = 'Continue'
 
 $modelPath = Join-Path $AppDir 'assets\models\htdemucs_fp16weights.onnx'
 $requirements = Join-Path $AppDir 'sidecar\requirements.txt'
 $sidecar = Join-Path $AppDir 'sidecar\bakushi_sidecar.py'
 $pythonInstaller = Join-Path $AppDir 'redist\python-3.11.9-amd64.exe'
-$pipLog = Join-Path $AppDir 'postinstall_pip.log'
-$selftestLog = Join-Path $AppDir 'postinstall_selftest.log'
+# Logs go to TEMP so the uninstaller leaves the app dir completely clean.
+$pipLog = Join-Path $env:TEMP 'bakushi_postinstall_pip.log'
+$selftestLog = Join-Path $env:TEMP 'bakushi_postinstall_selftest.log'
 
 function Refresh-PathFromRegistry {
     $machine = [Environment]::GetEnvironmentVariable('Path', 'Machine')
