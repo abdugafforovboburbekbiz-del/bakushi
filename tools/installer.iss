@@ -4,7 +4,7 @@
 ; model, and the official python.org installer + a post-install script.
 
 #define MyAppName "Bakushi"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.0.1"
 #define MyAppPublisher "Bakushi contributors"
 #define MyAppExeName "bakushi.exe"
 
