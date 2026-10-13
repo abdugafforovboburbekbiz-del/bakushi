@@ -10,7 +10,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 "..", "sidecar"))
 import bakushi_sidecar as bs  # noqa: E402
 
-MODEL = r"C:\path\to\USER\Desktop\D\Bakushi\assets\models\htdemucs_fp16weights.onnx"
+MODEL = os.environ.get(
+    "BAKUSHI_MODEL",
+    os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                  "..", "assets", "models",
+                                  "htdemucs_fp16weights.onnx")))
 
 
 def main():

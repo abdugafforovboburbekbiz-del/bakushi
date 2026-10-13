@@ -65,10 +65,10 @@ the same sidecar process are instant (`_model_cache`).
 
 ```powershell
 python sidecar/bakushi_sidecar.py --separate test_song.wav `
-  --model C:\path\to\USER\Downloads\htdemucs_6s.onnx `
+  --model C:\path\to\model.onnx `
   --out test_stems_gpu --provider gpu --bench
 python sidecar/bakushi_sidecar.py --separate test_song.wav `
-  --model C:\path\to\USER\Downloads\htdemucs_6s.onnx `
+  --model C:\path\to\model.onnx `
   --out test_stems_cpu --provider cpu --bench
 ```
 

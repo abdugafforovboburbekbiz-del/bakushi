@@ -75,3 +75,6 @@ test_stems*/
 # Installer output + downloaded redistributables.
 dist/
 tools/redist/
+
+# Machine-specific benchmark data (regenerated locally by tools/benchmark.py).
+tools/benchmark*.json

@@ -23,7 +23,7 @@ Should print something like `Python 3.11.x`. The app also accepts 3.10 or
 ## 2. Install sidecar packages
 
 ```powershell
-cd C:\path\to\USER\Desktop\D\Bakushi
+cd <repo folder>
 pip install -r sidecar/requirements.txt
 ```
 
@@ -60,7 +60,7 @@ With a model in place, add `--model <path>` to also verify model loading,
 provider choice and the detected stem mapping:
 
 ```powershell
-python sidecar/bakushi_sidecar.py --selftest --model C:\path\to\USER\Downloads\htdemucs_6s.onnx
+python sidecar/bakushi_sidecar.py --selftest --model C:\path\to\model.onnx
 ```
 
 Expected: `stems detected: 6 (drums, bass, other, vocals, guitar, piano)`.
@@ -69,7 +69,7 @@ Add `--infer-test` to run one random 7.8 s chunk and print per-stem RMS.
 Full end-to-end test without the Flutter app:
 
 ```powershell
-python sidecar/bakushi_sidecar.py --separate song.wav --model C:\path\to\USER\Downloads\htdemucs_6s.onnx --out stems
+python sidecar/bakushi_sidecar.py --separate song.wav --model C:\path\to\model.onnx --out stems
 ```
 
 ## Notes

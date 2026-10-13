@@ -345,7 +345,8 @@ class AppState extends ChangeNotifier {
       } else {
         final model =
             Platform.environment['BAKUSHI_MODEL'] ??
-            r'C:\path\to\USER\Downloads\htdemucs_6s.onnx';
+            'assets${Platform.pathSeparator}models'
+            '${Platform.pathSeparator}htdemucs_fp16weights.onnx';
         if (!File(model).existsSync()) {
           _action('autoTest.abort', detail: 'model missing: $model');
           return;
@@ -465,7 +466,7 @@ class AppState extends ChangeNotifier {
       if (Platform.environment['BAKUSHI_AUTOTEST_SAMPLE'] == '1') {
         final samplePath =
             Platform.environment['BAKUSHI_AUTOTEST_SAMPLE_PATH'] ??
-            r'C:\path\to\USER\Desktop\D\Bakushi\test_song.wav';
+            'test_song.wav';
         await assignCustomSampleToPad(4, samplePath);
         _action(
           'uploadVerify',

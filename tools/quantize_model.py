@@ -170,7 +170,10 @@ def verify_int8(four_path, int8_path, y4):
 
 def main():
     here = os.path.dirname(os.path.abspath(__file__))
-    default_in = r"C:\path\to\USER\Downloads\htdemucs_6s.onnx"
+    default_in = os.environ.get(
+        "BAKUSHI_INPUT_MODEL",
+        os.path.normpath(os.path.join(here, "..", "assets", "models",
+                                      "htdemucs_6s_fp16weights.onnx")))
     default_out_dir = os.path.normpath(os.path.join(here, "..", "assets", "models"))
 
     ap = argparse.ArgumentParser(description=__doc__)

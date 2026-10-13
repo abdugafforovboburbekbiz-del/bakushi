@@ -33,7 +33,8 @@ DEFAULT_MODELS = {
         "label": "6-stem fp32 (quality, baseline)",
         "path": os.environ.get(
             "BAKUSHI_QUALITY_MODEL",
-            r"C:\path\to\USER\Downloads\htdemucs_6s.onnx"),
+            os.path.join(ROOT, "assets", "models",
+                         "htdemucs_6s_fp16weights.onnx")),
     },
     "fp32-4s": {
         "label": "4-stem fp32 (sliced, reference)",
