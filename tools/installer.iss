@@ -70,6 +70,8 @@ Source: "..\assets\models\htdemucs_fp16weights.onnx"; \
 Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\tools\redist\python-3.11.9-amd64.exe"; DestDir: "{app}\redist"; \
     Flags: ignoreversion
+Source: "..\tools\redist\vc_redist.x64.exe"; DestDir: "{app}\redist"; \
+    Flags: ignoreversion
 Source: "..\tools\setup_postinstall.ps1"; DestDir: "{app}\tools"; \
     Flags: ignoreversion
 
@@ -88,6 +90,18 @@ var
   ErrText: String;
 begin
   if CurStep = ssPostInstall then begin
+    // VC++ 2015-2022 x64 runtime FIRST. Silent; needs elevation, so a
+    // non-zero exit on a per-user install is a WARNING (modern Windows
+    // already ships the runtime) - it must never fail the install.
+    if Exec(ExpandConstant('{app}') + '\redist\vc_redist.x64.exe', \
+        '/install /quiet /norestart', '', SW_HIDE, \
+        ewWaitUntilTerminated, ResultCode) then begin
+      Log('vc_redist exit code: ' + IntToStr(ResultCode));
+    end else begin
+      Log('vc_redist could not be started.');
+    end;
+    // Python + pip + sidecar selftest + settings pre-write. A failure
+    // here DOES fail the install with a clear message.
     Cmd := 'powershell.exe';
     Params := '-NoProfile -ExecutionPolicy Bypass -File "' + \
       ExpandConstant('{app}') + '\tools\setup_postinstall.ps1"' + \

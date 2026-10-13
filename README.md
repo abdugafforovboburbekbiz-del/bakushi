@@ -103,3 +103,46 @@ do that a single time.
 - **No sound** - open **Settings** at the bottom of the window and click
   **Retry audio engine**.
 
+## Building from source
+
+Prerequisites:
+
+- Flutter SDK (stable channel)
+- Visual Studio 2022 with the **Desktop development with C++** workload
+- Python 3.11 (for the sidecar; used at runtime too)
+- The model file `htdemucs_fp16weights.onnx` - download it from
+  `https://huggingface.co/StemSplitio/htdemucs-onnx` and put it in
+  `assets\models\` (the installer bundles it; the source tree does not)
+
+Build steps:
+
+```powershell
+# 1. Python sidecar dependencies (pinned versions matter - one runtime
+#    only: onnxruntime-openvino==1.24.1 + openvino==2025.4.1)
+pip install -r sidecar\requirements.txt
+
+# 2. Dart dependencies and the release build
+flutter pub get
+flutter build windows --release
+```
+
+Deploy next to the built exe (`build\windows\x64\runner\Release`):
+
+```powershell
+mkdir sidecar   # create the folder first - Copy-Item to a missing dir makes a FILE
+copy sidecar\bakushi_sidecar.py sidecar\beat_analysis.py sidecar\drum_punch.py sidecar\requirements.txt .\build\windows\x64\runner\Release\sidecar\
+robocopy assets\starter_kit build\windows\x64\runner\Release\assets\starter_kit /E
+```
+
+Verification:
+
+```powershell
+flutter analyze
+flutter test
+# End-to-end self-test (release exe):
+#   BAKUSHI_AUTOTEST=full, BAKUSHI_AUTOTEST_FILE=<song>, BAKUSHI_AUTOTEST_LIBRARY_ID=<slug>,
+#   BAKUSHI_AUTO_ADVANCE=1, BAKUSHI_AUTOTEST_PADS=1, BAKUSHI_AUTOTEST_SEQ=1
+```
+
+Architecture overview: `docs\ARCHITECTURE.md`.
+
