@@ -1,15 +1,54 @@
 # Bakushi
 
-Version 1.0.0
+Bakushi is a free, open-source Windows sampler for chopping songs into playable pads.
 
-## What this is
+Load a song, play with the original audio, optionally separate it into local AI stems,
+then crop, pitch, reverse, loop, and trigger sections on a 16-pad sampler.
 
-Bakushi turns any song into something you can play. Drop in a song, and a
-local AI splits it into drums, bass, other and vocals - right on your
-computer, nothing is uploaded. The 16 pads fill automatically with the best
-musical moments (drums become one-shots, bass and vocals become loops that
-start on the downbeat). Tap the pads to play, program a beat on the step
-grid, then export your performance as a WAV. Everything runs offline.
+It is a simple creative tool—not a DAW, not a professional stem extractor, and not an
+AI that decides which part of a song sounds best.
+
+## What Bakushi does
+
+- Load a song locally.
+- Play and chop the original mix.
+- Optionally separate the song into stems using local AI.
+- Assign sections of the original song or stems to pads.
+- Program a beat on the 16-lane step grid.
+- Play pads with your mouse or keyboard.
+- Change pitch, reverse, gain, HIT/LOOP mode, and add short fades.
+- Export processed pad audio and recorded performances as WAV.
+- Save and reopen local projects.
+
+## What Bakushi does not do
+
+- It does not run in the cloud.
+- It does not upload your audio.
+- It does not require an account.
+- It does not automatically find “the best” sample moments.
+- It does not replace a DAW, MPC, Serato Sample, Koala, or professional audio tools.
+- Separated stems are AI estimates and may contain bleed, artifacts, or missing detail.
+
+## Honest limitations
+
+- Stem separation is batch processing, not real time.
+- Separation speed depends heavily on your CPU, RAM, and selected model.
+- AI stems can sound watery, phasey, dull, or artifact-heavy.
+- The original song remains the cleanest source; stems are an optional creative starting point.
+- Bakushi is designed for experimentation, not studio-quality stem extraction.
+
+## Licensing
+
+Bakushi’s application code is licensed under the MIT License (`LICENSE`).
+
+The bundled HTDemucs stem-separation model is MIT-licensed
+(facebookresearch/demucs, ONNX export by StemSplitio). Other third-party
+models, model weights, and dependencies may have separate licenses -
+check `assets\licenses\THIRD_PARTY.md` before redistributing this
+project or its bundled components.
+
+Users are responsible for ensuring they have the right to use, sample,
+and distribute any audio they import into Bakushi.
 
 ## System requirements
 
@@ -27,9 +66,11 @@ Recommended:
 - 16 GB RAM, 6+ cores, SSD
 - Any CPU with AVX2
 
-Honest note: separation is real-time-ish on CPU (~0.8x real-time). A
-4-minute song takes roughly 3-5 minutes to separate. A long song takes
-longer; the progress bar shows the real state.
+Honest note: separation speed depends heavily on your CPU and its
+instruction set. Measured on a modern laptop CPU via OpenVINO: roughly
+0.8x real-time, i.e. a 4-minute song separates in about 3-5 minutes. On
+an older 4-core CPU without AVX2, expect roughly 2-3x longer. Long
+songs take longer; the progress bar always shows the real state.
 
 ## Model (required)
 
@@ -83,15 +124,20 @@ Windows may show "Windows protected your PC". Click **More info** →
 
 ## Sharing the app
 
-The EXE is **not** fully standalone. Share the whole `Release` folder:
+There are two ways to hand Bakushi to someone else:
 
-- `bakushi.exe`
-- `sidecar\` (the Python scripts)
-- `assets\starter_kit\` (the built-in drum sounds)
+- **Installer (recommended):** `BakushiSetup.exe` installs everything in
+  one click - Python, the sidecar dependencies, and the model. The person
+  running it does not install or download anything separately.
+- **Portable ZIP:** `bakushi-release.zip` unpacks to a folder with
+  `bakushi.exe`, the runtime, the sidecar and the starter kit (no model,
+  no Python). The person using it must install Python 3.11 once and
+  download the model once - the app remembers the model path after the
+  first pick, so that is a single-time step.
 
-The person receiving it must install Python once and download the model
-once. After the first run the app remembers the model path, so they only
-do that a single time.
+In both cases the app is not one self-contained EXE: it needs its
+`sidecar\` folder and `assets\starter_kit\` next to it. Share the whole
+installed folder or ZIP, not just `bakushi.exe`.
 
 ## Troubleshooting
 
@@ -102,6 +148,11 @@ do that a single time.
   falls back to CPU automatically.
 - **No sound** - open **Settings** at the bottom of the window and click
   **Retry audio engine**.
+- **Disk space** - saved songs are kept in
+  `%APPDATA%\com.bakushi\bakushi\library` as raw 32-bit float audio
+  (roughly 650 MB per 5-minute song: original + four stems + a drum-stem
+  backup). There is no in-app cleanup button yet; removing unneeded song
+  folders there reclaims the space.
 
 ## Building from source
 
