@@ -101,6 +101,16 @@ contributors in `CONTRIBUTING.md`, architecture in `docs\ARCHITECTURE.md`.
     sha256 `03b225acdda8246551655dfe0854c4dda3c15a6b7213939c0d9b07d3b21c4826`
   - `bakushi-release.zip` — 14,335,121 bytes (~13.7 MB),
     sha256 `e8c03ba272df603fab3fb52cc81cca6f52ea708ad204aceeaf69957d0da16719`
+- **v1.0.1 (2026-10-13, supersedes v1.0.0's assets):**
+  https://github.com/abdugafforovboburbekbiz-del/bakushi/releases/tag/v1.0.1 —
+  same-day follow-up: saved-song Delete button (with confirm dialog),
+  honest README positioning (does/does-not, limitations, licensing),
+  version bump 1.0.0+1 → 1.0.1+2. Assets (both `uploaded`, HTTP 200):
+  `BakushiSetup.exe` 184,865,511 bytes, `bakushi-release.zip`
+  14,340,725 bytes. Verified by full round-trip: release build →
+  dev-exe autotest `autoTest.done` no STALL → silent install exit 0 +
+  postinstall `SELFTEST-DONE` → installed-app autotest `autoTest.done` →
+  uninstall exit 0.
 - **Consistency:** remote `main` HEAD =
   local `284b530c844747ecef5d62f38cbe8ccd50003c0c` (8 commits); top-level
   tree has exactly the 16 intended entries (README.md, CONTRIBUTING.md,
