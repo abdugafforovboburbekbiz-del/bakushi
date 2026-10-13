@@ -78,3 +78,6 @@ tools/redist/
 
 # Machine-specific benchmark data (regenerated locally by tools/benchmark.py).
 tools/benchmark*.json
+
+# Generated work/debug artifacts (decoded PCM, A/B wavs, sidecar logs).
+tools/_*/

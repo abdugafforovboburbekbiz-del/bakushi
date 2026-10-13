@@ -92,17 +92,24 @@ contributors in `CONTRIBUTING.md`, architecture in `docs\ARCHITECTURE.md`.
 ## GitHub status
 
 `gh` CLI is not installed / authenticated on this machine, so nothing was
-pushed and no release was created. Manual steps (run these from the repo):
+pushed and no release was created. Everything is prepared for the user to
+run three steps with their own GitHub account:
 
-```powershell
-# 1. Create an empty PUBLIC repo named "bakushi" on github.com (no README)
-git remote add origin https://github.com/<your-user>/bakushi.git
-git push -u origin main
-# 2. On github.com: Releases -> Draft a new release -> tag v1.0.0
-#    -> attach dist\BakushiSetup.exe and dist\bakushi-release.zip
-```
+- **Step 1:** create an empty public repo named `bakushi` at github.com
+  (no README / license / .gitignore - the repo already has them).
+- **Step 2:** run the push script:
+  `powershell -ExecutionPolicy Bypass -File tools\push_to_github.ps1 -RepoUrl https://github.com/<your-user>/bakushi.git`
+  (adds the `origin` remote, pushes `main`, tags and pushes `v1.0.0`;
+  it re-checks that no personal paths or >100 MB files are tracked
+  before pushing).
+- **Step 3:** on github.com: Releases → Draft a new release → tag
+  `v1.0.0` → paste `dist\RELEASE_NOTES.md` → attach
+  `dist\BakushiSetup.exe` and `dist\bakushi-release.zip` → publish.
 
-Release notes to paste: one-paragraph summary (local AI separation →
-16 pads + step sequencer, fully offline), SmartScreen note (unsigned:
-More info → Run anyway), model link
-`https://huggingface.co/StemSplitio/htdemucs-onnx`.
+Pre-push sanitization (2026-10-13): every `USER` / `C:\path\toremoved from tracked files (docs, `lib\state\app_state.dart` fallbacks now
+derive from `BAKUSHI_MODEL` / `BAKUSHI_AUTOTEST_FILE` with generic relative
+fallbacks, tool scripts use env vars + repo-relative defaults); the three
+machine-specific `tools\benchmark*.json` files deleted and gitignored;
+3.4 GB of generated work artifacts under `tools\_*` work dirs untracked,
+deleted and gitignored. Size scan: no tracked file over 100 MB, no
+`*.onnx`, no `dist\` content, no `test_songs\`.
