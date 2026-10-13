@@ -571,6 +571,19 @@ class _HomePageState extends State<HomePage> {
                           ),
                           child: const Text('Load'),
                         ),
+                        const SizedBox(width: 4),
+                        IconButton(
+                          tooltip: 'Delete song',
+                          onPressed: s.busy
+                              ? null
+                              : () => _confirmDeleteSong(
+                                    s,
+                                    songs[i].id,
+                                    songs[i].name,
+                                  ),
+                          icon: const Icon(Icons.delete_outline, size: 18),
+                          color: BakushiTokens.danger,
+                        ),
                       ],
                     ),
                   ),
@@ -578,6 +591,38 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
     );
+  }
+
+  /// Confirm and delete a saved song from the local library.
+  Future<void> _confirmDeleteSong(AppState s, String id, String name) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete song?'),
+        content: Text(
+          "Delete '$name'? This permanently removes the saved copy, "
+          'its stems and its pads from disk. Export anything you want '
+          'to keep first.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: BakushiTokens.danger,
+            ),
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+    if (ok == true) {
+      await s.deleteLibrarySong(id);
+      s.showToast('Song deleted.');
+    }
   }
 
   static String _two(int v) => v.toString().padLeft(2, '0');

@@ -25,7 +25,9 @@ AI that decides which part of a song sounds best.
 - It does not run in the cloud.
 - It does not upload your audio.
 - It does not require an account.
-- It does not automatically find “the best” sample moments.
+- It does not use AI to judge which moments sound best — after separation,
+  pads auto-fill with deterministic musical cuts (downbeat-anchored,
+  RMS-ranked) that you can freely edit.
 - It does not replace a DAW, MPC, Serato Sample, Koala, or professional audio tools.
 - Separated stems are AI estimates and may contain bleed, artifacts, or missing detail.
 
@@ -33,7 +35,9 @@ AI that decides which part of a song sounds best.
 
 - Stem separation is batch processing, not real time.
 - Separation speed depends heavily on your CPU, RAM, and selected model.
-- AI stems can sound watery, phasey, dull, or artifact-heavy.
+- AI stems can sound watery, phasey, dull, or artifact-heavy — that is
+  the trade-off for running separation on your own local hardware instead
+  of the cloud.
 - The original song remains the cleanest source; stems are an optional creative starting point.
 - Bakushi is designed for experimentation, not studio-quality stem extraction.
 
