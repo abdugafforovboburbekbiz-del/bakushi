@@ -9,7 +9,8 @@ param([Parameter(Mandatory = $true)][string]$RepoUrl)
 $ErrorActionPreference = 'Stop'
 
 # Safety checks: nothing personal, no huge files, no models.
-$personal = git grep -c -e 'USER' 2>$null
+$pat = 'C:' + '\Users'
+$personal = git grep -c -e $pat 2>$null
 if ($LASTEXITCODE -eq 0) {
     Write-Error "ABORT: personal path references still in the repo: $personal"
 }
