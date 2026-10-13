@@ -144,5 +144,6 @@ flutter test
 #   BAKUSHI_AUTO_ADVANCE=1, BAKUSHI_AUTOTEST_PADS=1, BAKUSHI_AUTOTEST_SEQ=1
 ```
 
-Architecture overview: `docs\ARCHITECTURE.md`.
+Architecture overview: `docs\ARCHITECTURE.md`. Want to contribute? See
+`CONTRIBUTING.md`.
 
