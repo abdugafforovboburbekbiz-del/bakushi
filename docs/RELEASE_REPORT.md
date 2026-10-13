@@ -106,10 +106,13 @@ run three steps with their own GitHub account:
   `v1.0.0` → paste `dist\RELEASE_NOTES.md` → attach
   `dist\BakushiSetup.exe` and `dist\bakushi-release.zip` → publish.
 
-Pre-push sanitization (2026-10-13): every `USER` / `C:\path\toremoved from tracked files (docs, `lib\state\app_state.dart` fallbacks now
+Pre-push sanitization (2026-10-13): every personal path (`C:\path\to\...`)
+removed from tracked files (docs, `lib\state\app_state.dart` fallbacks now
 derive from `BAKUSHI_MODEL` / `BAKUSHI_AUTOTEST_FILE` with generic relative
 fallbacks, tool scripts use env vars + repo-relative defaults); the three
 machine-specific `tools\benchmark*.json` files deleted and gitignored;
 3.4 GB of generated work artifacts under `tools\_*` work dirs untracked,
-deleted and gitignored. Size scan: no tracked file over 100 MB, no
-`*.onnx`, no `dist\` content, no `test_songs\`.
+deleted and gitignored - and the whole git history was rewritten
+(filter-branch) so no machine path or work artifact survives in any
+commit. Size scan: no tracked file over 100 MB, no `*.onnx`, no `dist\`
+content, no `test_songs\`.
